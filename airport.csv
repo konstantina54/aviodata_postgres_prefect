@@ -1,0 +1,337 @@
+,APT_ICAO,APT_NAME,STATE_NAME
+0,LATI,Tirana,Albania
+1,UDYZ,Yerevan,Armenia
+2,LOWG,Graz,Austria
+3,LOWI,Innsbruck,Austria
+4,LOWK,Klagenfurt,Austria
+5,LOWL,Linz,Austria
+6,LOWS,Salzburg,Austria
+7,LOWW,Vienna,Austria
+8,EBAW,Antwerp,Belgium
+9,EBBR,Brussels,Belgium
+10,EBCI,Charleroi,Belgium
+11,EBLG,Liège,Belgium
+12,EBOS,Ostend-Bruges,Belgium
+13,LQSA,Sarajevo,Bosnia and Herzegovina
+14,LBSF,Sofia,Bulgaria
+15,LDZA,Zagreb,Croatia
+16,LCLK,Larnaca,Cyprus
+17,LCPH,Paphos,Cyprus
+18,LKMT,Ostrava,Czech Republic
+19,LKPR,Prague,Czech Republic
+20,LKTB,Brno-Tuřany,Czech Republic
+21,EKCH,Copenhagen - Kastrup,Denmark
+22,EETN,Tallinn,Estonia
+23,EETU,Tartu,Estonia
+24,EFHK,Helsinki - Vantaa,Finland
+25,LFBA,Agen-La Garenne,France
+26,LFBD,Bordeaux-Mérignac,France
+27,LFBE,Bergerac-Roumanière,France
+28,LFBH,La Rochelle-Ile de Ré,France
+29,LFBI,Poitiers-Biard,France
+30,LFBL,Limoges-Bellegarde,France
+31,LFBO,Toulouse-Blagnac,France
+32,LFBP,Pau-Pyrénées,France
+33,LFBT,Tarbes-Lourdes Pyrénées,France
+34,LFBZ,Biarritz-Bayonne-Anglet,France
+35,LFCR,Rodez-Marcillac,France
+36,LFGJ,Dôle-Tavaux,France
+37,LFJL,Metz-Nancy-Lorraine,France
+38,LFKB,Bastia-Poretta,France
+39,LFKC,Calvi-Sainte-Catherine,France
+40,LFKF,Figari-Sud Corse,France
+41,LFKJ,Ajaccio-Napoléon-Bonaparte,France
+42,LFLB,Chambéry-Aix-les-Bains,France
+43,LFLC,Clermont-Ferrand-Auvergne,France
+44,LFLL,Lyon-Saint-Exupéry,France
+45,LFLP,Annecy-Meythet,France
+46,LFLS,Grenoble-Isère,France
+47,LFLY,Lyon-Bron,France
+48,LFMD,Cannes-Mandelieu,France
+49,LFMH,Saint-Etienne-Bouthéon,France
+50,LFMK,Carcassonne-Salvaza,France
+51,LFML,Marseille-Provence,France
+52,LFMN,Nice-Côte d’Azur,France
+53,LFMP,Perpignan-Rivesaltes,France
+54,LFMT,Montpellier-Méditerranée,France
+55,LFMU,Béziers-Vias,France
+56,LFOB,Beauvais-Tillé,France
+57,LFOK,Châlons-Vatry,France
+58,LFPB,Paris-Le Bourget,France
+59,LFPG,Paris-Charles-de-Gaulle,France
+60,LFPN,Toussus-le-Noble,France
+61,LFPO,Paris-Orly,France
+62,LFQQ,Lille-Lesquin,France
+63,LFRB,Brest-Bretagne,France
+64,LFRD,Dinard-Pleurtuit-Saint-Malo,France
+65,LFRG,Deauville-Normandie,France
+66,LFRH,Lorient-Lann Bihoué,France
+67,LFRK,Caen-Carpiquet,France
+68,LFRN,Rennes-Saint-Jacques,France
+69,LFRO,Lannion,France
+70,LFRQ,Quimper-Pluguffan,France
+71,LFRS,Nantes-Atlantique,France
+72,LFSB,Bâle-Mulhouse,France
+73,LFSL,Brive-Souillac,France
+74,LFST,Strasbourg-Entzheim,France
+75,LFTH,Hyères-Le Palyvestre,France
+76,LFTW,Nîmes-Garons,France
+77,UGTB,Tbilisi,Georgia
+78,EDDB,Berlin - Brandenburg,Germany
+79,EDDC,Dresden,Germany
+80,EDDE,Erfurt,Germany
+81,EDDF,Frankfurt,Germany
+82,EDDG,Muenster-Osnabrueck,Germany
+83,EDDH,Hamburg,Germany
+84,EDDK,Cologne-Bonn,Germany
+85,EDDL,Dusseldorf,Germany
+86,EDDM,Munich,Germany
+87,EDDN,Nuremberg,Germany
+88,EDDP,Leipzig-Halle,Germany
+89,EDDR,Saarbruecken,Germany
+90,EDDS,Stuttgart,Germany
+91,EDDT,Berlin - Tegel,Germany
+92,EDDV,Hanover,Germany
+93,EDDW,Bremen,Germany
+94,LGAV,Athens,Greece
+95,LGIR,Heraklion,Greece
+96,LGKF,Kefallinia,Greece
+97,LGKO,Kos,Greece
+98,LGKR,Corfu,Greece
+99,LGMK,Mikonos,Greece
+100,LGPZ,Aktion,Greece
+101,LGRP,Rodos,Greece
+102,LGSA,Khania - Souda,Greece
+103,LGSR,Santorini,Greece
+104,LGTS,Thessaloniki,Greece
+105,LGZA,Zakinthos,Greece
+106,LHBP,Budapest - Ferihegy,Hungary
+107,EICK,Cork,Ireland
+108,EIDL,Donegal,Ireland
+109,EIDW,Dublin,Ireland
+110,EIKN,Connaught,Ireland
+111,EIKY,Kerry - Farranfore,Ireland
+112,EINN,Shannon,Ireland
+113,EIWF,Waterford,Ireland
+114,LIBR,Brindisi,Italy
+115,LICC,Catania,Italy
+116,LIMC,Milan - Malpensa,Italy
+117,LIME,Bergamo,Italy
+118,LIMF,Torino Caselle,Italy
+119,LIML,Milan - Linate,Italy
+120,LIPE,Bologna,Italy
+121,LIPH,Treviso,Italy
+122,LIPZ,Venice,Italy
+123,LIRA,Rome - Ciampino,Italy
+124,LIRF,Rome - Fiumicino,Italy
+125,LIRN,Naples,Italy
+126,LIRP,Pisa San Giusto,Italy
+127,EVRA,Riga,Latvia
+128,EYKA,Kaunas,Lithuania
+129,EYPA,Palanga,Lithuania
+130,EYSA,Siauliai,Lithuania
+131,EYVI,Vilnius,Lithuania
+132,ELLX,Luxembourg,Luxembourg
+133,LMML,Malta,Malta
+134,LUKK,Chișinău,Moldova
+135,LYPG,Podgorica,Montenegro
+136,EHAM,Amsterdam - Schiphol,Netherlands
+137,EHBK,Maastricht-Aachen,Netherlands
+138,EHGG,Groningen,Netherlands
+139,EHRD,Rotterdam,Netherlands
+140,ENBR,Bergen,Norway
+141,ENGM,Oslo - Gardermoen,Norway
+142,ENHD,Haugesund,Norway
+143,ENVA,Trondheim,Norway
+144,ENZV,Stavanger,Norway
+145,EPBY,Bydgoszcz,Poland
+146,EPGD,Gdansk,Poland
+147,EPKK,Krakow - Balice,Poland
+148,EPKT,Katowice - Pyrzowice,Poland
+149,EPLB,Lublin,Poland
+150,EPLL,Lodz - Lublinek,Poland
+151,EPMO,Warszawa - Modlin,Poland
+152,EPPO,Poznan - Lawica,Poland
+153,EPRZ,Rzeszow - Jasionka,Poland
+154,EPSC,Szczecin - Goleniów,Poland
+155,EPWA,Warszawa - Chopina,Poland
+156,EPWR,Wroclaw - Strachowice,Poland
+157,LPAZ,Santa Maria,Portugal
+158,LPCS,Cascais,Portugal
+159,LPFL,Flores,Portugal
+160,LPFR,Faro,Portugal
+161,LPHR,Horta,Portugal
+162,LPMA,Madeira,Portugal
+163,LPPD,Ponta Delgada,Portugal
+164,LPPR,Porto,Portugal
+165,LPPS,Porto Santo,Portugal
+166,LPPT,Lisbon,Portugal
+167,LWSK,Skopje,Republic of North Macedonia
+168,LROP,Bucharest - Otopeni,Romania
+169,LYBE,Belgrade - Nikola Tesla,Serbia
+170,LZIB,Bratislava,Slovakia
+171,LJLJ,Ljubljana,Slovenia
+172,LJMB,Maribor,Slovenia
+173,LJPZ,Portorož,Slovenia
+174,GCFV,Fuerteventura,Spain
+175,GCGM,La Gomera,Spain
+176,GCHI,Hierro,Spain
+177,GCLA,La Palma,Spain
+178,GCLP,Gran Canaria,Spain
+179,GCRR,Lanzarote,Spain
+180,GCTS,Tenerife Sur - Reina Sofia,Spain
+181,GCXO,Tenerife North,Spain
+182,GEML,Melilla,Spain
+183,LEAL,Alicante,Spain
+184,LEAM,Almeria,Spain
+185,LEAS,Asturias,Spain
+186,LEBB,Bilbao,Spain
+187,LEBL,Barcelona,Spain
+188,LECO,La Coruna,Spain
+189,LEDA,Lleida - Alguaire,Spain
+190,LEGE,Gerona,Spain
+191,LEGR,Granada,Spain
+192,LEIB,Ibiza,Spain
+193,LEJR,Jerez De La Frontera,Spain
+194,LELC,Murcia San Javier,Spain
+195,LELL,Sabadell,Spain
+196,LEMD,Madrid - Barajas,Spain
+197,LEMG,Málaga,Spain
+198,LEMH,Mahon,Spain
+199,LEPA,Palma de Mallorca,Spain
+200,LEPP,Noain Pamplona,Spain
+201,LERT,Rota,Spain
+202,LESB,Son Bonet,Spain
+203,LESO,San Sebastian,Spain
+204,LEST,Santiago,Spain
+205,LEVC,Valencia,Spain
+206,LEVD,Valladolid,Spain
+207,LEVX,Vigo,Spain
+208,LEXJ,Santander,Spain
+209,LEZG,Zaragoza,Spain
+210,LEZL,Sevilla,Spain
+211,ESGG,Göteborg,Sweden
+212,ESSA,Stockholm - Arlanda,Sweden
+213,ESSB,Stockholm - Bromma,Sweden
+214,LSGG,Geneva,Switzerland
+215,LSGS,Sion,Switzerland
+216,LSZH,Zürich,Switzerland
+217,LTAC,Ankara - Esenboğa,Turkey
+218,LTAI,Antalya,Turkey
+219,LTBA,Istanbul Atatürk,Turkey
+220,LTBJ,Izmir - Adnan Menderes,Turkey
+221,LTFJ,Istanbul Sabiha Gökçen,Turkey
+222,UKBB,Kiev - Boryspil,Ukraine
+223,EGAA,Belfast - Aldergrove,United Kingdom
+224,EGAC,Belfast - City Airport,United Kingdom
+225,EGAE,Londonderry - Eglinton,United Kingdom
+226,EGBB,Birmingham,United Kingdom
+227,EGCC,Manchester,United Kingdom
+228,EGGD,Bristol,United Kingdom
+229,EGGW,London - Luton,United Kingdom
+230,EGHI,Southampton,United Kingdom
+231,EGKB,Biggin Hill,United Kingdom
+232,EGKK,London - Gatwick,United Kingdom
+233,EGLC,London - City,United Kingdom
+234,EGLF,Farnborough,United Kingdom
+235,EGLL,London - Heathrow,United Kingdom
+236,EGNX,East Midlands,United Kingdom
+237,EGPD,Aberdeen,United Kingdom
+238,EGPF,Glasgow,United Kingdom
+239,EGPH,Edinburgh,United Kingdom
+240,EGSS,London - Stansted,United Kingdom
+241,LKKV,Karlovy Vary,Czech Republic
+242,LFAQ,Albert-Bray,France
+243,LFJR,Angers-Marcé,France
+244,LFLI,Annemasse,France
+245,LFLX,Châteauroux-Déols,France
+246,LFMV,Avignon-Caumont,France
+247,LFOT,Tours-Val de Loire,France
+248,LFRM,Le Mans,France
+249,EIWT,Weston,Ireland
+250,LECU,Madrid - Cuatro Viento,Spain
+251,LELN,Leon,Spain
+252,LEMO,Seville - Moron,Spain
+253,LERS,Reus,Spain
+254,LEVT,Vitoria,Spain
+255,LGSK,Skiathos,Greece
+256,EPRA,Radom,Poland
+257,EPZG,Zielona Gora - Babimost,Poland
+258,LEAB,Albacete,Spain
+259,LEBZ,Badajoz,Spain
+260,LETO,Madrid - Torrejon,Spain
+261,LFMI,Istres-Le Tubé,France
+262,LFRZ,Saint-Nazaire-Montoir,France
+263,LRBS,Bucharest - Băneasa,Romania
+264,LEGT,Madrid - Getafe,Spain
+265,LESJ,Palma - Son San Juan,Spain
+266,LFOH,Le Havre-Octeville,France
+267,LERJ,Logrono,Spain
+268,LESA,Salamanca Matalan,Spain
+269,LEIZ,Abad,Spain
+270,LEBA,Cordoba,Spain
+271,LEBG,Burgos,Spain
+272,LDZL,Lučko,Croatia
+273,EPSY,Olsztyn-Mazury,Poland
+274,LERE,Valencia - Requena,Spain
+275,EISG,Sligo,Ireland
+276,EVVA,Ventspils,Latvia
+277,EVLA,Liepaja,Latvia
+278,LLBG,Ben Gurion International,Israel
+279,GMAD,Al Massira,Morocco
+280,GMFF,Saïss,Morocco
+281,GMME,Rabat-Salé,Morocco
+282,GMMN,Mohammed V International,Morocco
+283,GMMX,Menara,Morocco
+284,GMTT,Ibn Batouta,Morocco
+285,EHLE,Lelystad,Netherlands
+286,ENAL,Alesund,Norway
+287,ENAN,Andenes,Norway
+288,ENAT,Alta,Norway
+289,ENBL,Forde Bringeland,Norway
+290,ENBN,Bronnoysund Bronnoy,Norway
+291,ENBO,Bodø,Norway
+292,ENBS,Batsfjord,Norway
+293,ENBV,Berlevåg,Norway
+294,ENCN,Kristiansand Kjevik,Norway
+295,ENDU,Bardufoss,Norway
+296,ENEV,Harstad - Narvik Evenes,Norway
+297,ENFL,Florø,Norway
+298,ENHF,Hammerfest,Norway
+299,ENHV,Honningsvåg Valan,Norway
+300,ENKB,Kristiansund Kvernberget,Norway
+301,ENKR,Kirkenes Høybuktmoen,Norway
+302,ENLK,Leknes,Norway
+303,ENMH,Mehamn,Norway
+304,ENML,Molde Årø,Norway
+305,ENMS,Mosjøen Kjærstad,Norway
+306,ENNA,Lakselv Banak,Norway
+307,ENNM,Namsos Høknesøra,Norway
+308,ENOV,Orsta¿Volda Hovden,Norway
+309,ENRA,Mo i Rana Røssvoll,Norway
+310,ENRM,Rorvik Ryum,Norway
+311,ENRO,Roros,Norway
+312,ENRS,Rost,Norway
+313,ENSB,Svalbard Longyear,Norway
+314,ENSD,Sandane  Anda,Norway
+315,ENSG,Sogndal Haukåsen,Norway
+316,ENSH,Svolvær Helle,Norway
+317,ENSK,Stokmarknes Skagen,Norway
+318,ENSR,Sorkjosen,Norway
+319,ENSS,Vardø Svartnes,Norway
+320,ENST,Sandnessjøen Stokka,Norway
+321,ENTC,Tromsø,Norway
+322,ENVD,Vadsø,Norway
+323,ENVR,Værøy,Norway
+324,EGNT,Newcastle,United Kingdom
+325,LPMT,Montijo,Portugal
+326,LTFM,iGA Istanbul Airport,Turkey
+327,LEMI,Región de Murcia International Airport,Spain
+328,EVJA,Tukums Jurmala,Latvia
+329,LERL,Ciudad Real Central,Spain
+330,LLBG,Tel Aviv - Ben Gurion International,Israel
+331,LICJ,Palermo Falcone-Borsellino,Italy
+332,LFOP,Rouen,France
+333,EICM,Galway Carnmore,Ireland
+334,BIKF,Keflavik,Iceland
+335,LTFM,Istanbul,Turkey
