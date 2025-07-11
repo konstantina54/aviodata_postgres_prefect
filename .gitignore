@@ -1,4 +1,6 @@
 config.txt
-README.md
 .venv
 .csv
+__pycache__
+src/python
+opensky-api
