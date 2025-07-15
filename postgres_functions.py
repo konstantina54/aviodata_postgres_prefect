@@ -1,7 +1,7 @@
 import configparser
 from sqlalchemy import create_engine
 import psycopg2
-
+import pandas as pd
 
 config = configparser.ConfigParser()
 config.read('config.txt')
@@ -11,7 +11,7 @@ password = config.get('postgres', 'password')
 host = config.get('postgres', 'host')
 port = config.get('postgres', 'port')
 db = config.get('postgres', 'db')
-table_name = config.get('postgres', 'table_name')
+# table_name = config.get('postgres', 'table_name')
 
 postgres_url = f'postgresql://{user}:{password}@{host}:{port}/{db}'
 engine = create_engine(postgres_url)
@@ -31,11 +31,22 @@ def get_connection():
 """using sql with params in postgres"""
 # from psycopg2.extensions import AsIs
 
-# conn = psycopg2.connect(database='cpn')
-# cursor = conn.cursor()
-# query = """CREATE SCHEMA %s AUTHORIZATION %s;"""
-# param = (AsIs('u1'), AsIs('u1; select * from user_table'))
-# print cursor.mogrify(query, param)
+
+
+def insert_airports():
+    """add airport data in postgres"""
+    file_path = 'airports.csv'
+    # Read the CSV with pandas
+    df = pd.read_csv(file_path)
+
+    # Clean column names (optional: make PostgreSQL-safe)
+    df.columns = [col.lower() for col in df.columns]
+    table_name = 'airports'
+
+    df.to_sql(table_name, engine, if_exists='replace', index=False)
+
+    print(f"✅ CSV imported successfully into table '{table_name}' in your PostgreSQL database.")
+
 
 
 """ create new table"""
@@ -118,3 +129,10 @@ def get_connection():
 
 # # Commit your changes in the database
 # conn.commit()
+
+
+
+
+
+if __name__ == "__main__":
+    openSky_api_access()

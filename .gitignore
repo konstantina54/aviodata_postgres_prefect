@@ -1,6 +1,7 @@
 config.txt
 .venv
-.csv
+*.csv
 __pycache__
 src/python
 opensky-api
+credentials(1).json

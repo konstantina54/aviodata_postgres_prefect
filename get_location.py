@@ -44,6 +44,24 @@ def get_ip_location(ip_address):
         return f"Unexpected error: {e}"        
 
 # print("Your public IP address is:", get_public_ip())
+def find_local_airports(lon, lat):
+"""Get coordinates of airports based on the ip info""""
+
+
+
+
+
+# Calculate distance between current location and airport. If raius > than xkm don't bother else identify
+# Haversine formula to calculate distance between two lat/lon points in km
+# def haversine(lat1, lon1, lat2, lon2):
+#     R = 6371  # Earth radius in km
+#     dlat = radians(lat2 - lat1)
+#     dlon = radians(lon2 - lon1)
+#     a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
+#     c = 2 * asin(sqrt(a))
+#     return R * c
+
+
 
 get_public_ip()
 

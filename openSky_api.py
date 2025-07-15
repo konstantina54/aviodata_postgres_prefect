@@ -26,8 +26,9 @@ def openSky_api_access():
     begin = int(time.mktime(time.strptime('2025-07-09 12:00', '%Y-%m-%d %H:%M')))
     end = int(time.mktime(time.strptime('2025-07-09 14:00', '%Y-%m-%d %H:%M')))
     headers = {'Authorization': f'Bearer {access_token}'}
-    openSky_arrival(headers, airport, begin, end)
-    openSky_departures(headers, airport, begin, end)
+    arrivals = openSky_arrival(headers, airport, begin, end)
+    departures = openSky_departures(headers, airport, begin, end)
+    return arrivals, departures
 
   
 
@@ -35,10 +36,10 @@ def openSky_arrival(headers, airport, begin, end):
     url = f'https://opensky-network.org/api/flights/arrival?airport={airport}&begin={begin}&end={end}'
     response = requests.get(url, headers=headers)
     arrivals = response.json()
-    return print(arrivals[0])
+    return arrivals
 
 def openSky_departures(headers, airport, begin, end):
     url = f'https://opensky-network.org/api/flights/departure?airport={airport}&begin={begin}&end={end}'
     response = requests.get(url, headers=headers)
     departures = response.json()
-    return print(departures[0])
+    return departures
