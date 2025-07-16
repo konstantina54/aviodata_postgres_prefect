@@ -1,35 +1,30 @@
 import configparser
 from sqlalchemy import create_engine
 import psycopg2
+from psycopg2 import OperationalError, Error
 import pandas as pd
 
 config = configparser.ConfigParser()
 config.read('config.txt')
 
-user = config.get('postgres', 'user')
-password = config.get('postgres', 'password')
-host = config.get('postgres', 'host')
-port = config.get('postgres', 'port')
-db = config.get('postgres', 'db')
+
+db_config = {
+    'user': config.get('postgres', 'user'),
+    'password': config.get('postgres', 'password'),
+    'host': config.get('postgres', 'host'),
+    'port': config.get('postgres', 'port'),
+    'dbname': config.get('postgres', 'db')
+}
 # table_name = config.get('postgres', 'table_name')
 
-postgres_url = f'postgresql://{user}:{password}@{host}:{port}/{db}'
-engine = create_engine(postgres_url)
 
-def get_connection():
-    try:
-        return psycopg2.connect(
-            user = user,
-            password = password,
-            host = host,
-            port = port,
-            database = db
-        )
-    except:
-        return False
 
-"""using sql with params in postgres"""
-# from psycopg2.extensions import AsIs
+
+
+def get_engine():
+    """Returns a SQLAlchemy engine."""
+    conn_str = f"postgresql+psycopg2://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['dbname']}"
+    return create_engine(conn_str)
 
 
 
@@ -42,97 +37,52 @@ def insert_airports():
     # Clean column names (optional: make PostgreSQL-safe)
     df.columns = [col.lower() for col in df.columns]
     table_name = 'airports'
-
+    engine = get_engine()
     df.to_sql(table_name, engine, if_exists='replace', index=False)
 
     print(f"✅ CSV imported successfully into table '{table_name}' in your PostgreSQL database.")
 
 
+def insert_ip_safely(ip_address, db_config):
+    """
+    Create `ip_addresses` table if it doesn't exist,
+    then insert a single IP address.
+    """
+    create_table_sql = """
+    CREATE TABLE IF NOT EXISTS ip_addresses (
+        id SERIAL PRIMARY KEY,
+        ip TEXT NOT NULL
+    );
+    """
 
-""" create new table"""
+    insert_sql = "INSERT INTO ip_addresses (ip) VALUES (%s);"
 
-# def create_tables():
-#     """ create tables in the PostgreSQL database"""
-#     commands = (
-#         """
-#         CREATE TABLE student (
-#             student_id SERIAL PRIMARY KEY,
-#             student_name VARCHAR(255) NOT NULL
-#         )
-#         """,
-#         """ CREATE TABLE grade (
-#                 grade_id SERIAL PRIMARY KEY,
-#                 grade_name VARCHAR(255) NOT NULL
-#                 )
-#         """,
-#         """
-#         CREATE TABLE student_grade (
-#                 grade_id INTEGER PRIMARY KEY,
-#                 file_extension VARCHAR(5) NOT NULL,
-#                 drawing_data BYTEA NOT NULL,
-#                 FOREIGN KEY (grade_id)
-#                 REFERENCES grade (grade_id)
-#                 ON UPDATE CASCADE ON DELETE CASCADE
-#         )
-#         """,
-#         """
-#         CREATE TABLE student_detail (
-#                 student_id INTEGER NOT NULL,
-#                 grade_id INTEGER NOT NULL,
-#                 PRIMARY KEY (student_id , grade_id),
-#                 FOREIGN KEY (student_id)
-#                     REFERENCES student (student_id)
-#                     ON UPDATE CASCADE ON DELETE CASCADE,
-#                 FOREIGN KEY (grade_id)
-#                     REFERENCES grade (grade_id)
-#                     ON UPDATE CASCADE ON DELETE CASCADE
-#         )
-#         """)
-#     conn = None
-#     try:
-#         # read the connection parameters
-#         params = config()
-#         # connect to the PostgreSQL server
-#         conn = psycopg2.connect(**params)
-#         cur = conn.cursor()
-#         # create table one by one
-#         for command in commands:
-#             cur.execute(command)
-#         # close communication with the PostgreSQL database server
-#         cur.close()
-#         # commit the changes
-#         conn.commit()
-#     except (Exception, psycopg2.DatabaseError) as error:
-#         print(error)
-#     finally:
-#         if conn is not None:
-#             conn.close()
+    try:
+        # Connect to PostgreSQL
+        conn = psycopg2.connect(**db_config)
+        cursor = conn.cursor()
 
-""" insert data """
-# cursor.execute('''INSERT INTO Geeky(name , state)\
-#     VALUES ('Babita','Bihar')''')
-# cursor.execute(
-#     '''INSERT INTO Geeky(name , state)\
-#     VALUES ('Anushka','Hyderabad')''')
-# cursor.execute(
-#     '''INSERT INTO Geeky(name , state)\
-#     VALUES ('Anamika','Banglore')''')
-# cursor.execute('''INSERT INTO Geeky(name , state)\
-#     VALUES ('Sanaya','Pune')''')
-# cursor.execute(
-#     '''INSERT INTO Geeky(name , state)\
-#     VALUES ('Radha','Chandigarh')''')
+        # 1. Create the table if it doesn't exist
+        cursor.execute(create_table_sql)
 
-"""update data"""
-# sql1 = "UPDATE Geeky SET state = 'Haryana' WHERE name = 'Radha'"
-# cursor.execute(sql1)
+        # 2. Insert the new row
+        cursor.execute(insert_sql, (ip_address,))
 
-# # Commit your changes in the database
-# conn.commit()
+        conn.commit()
 
+        print(f"✅ IP '{ip_address}' inserted successfully.")
 
+    except OperationalError as op_err:
+        print(f"❌ Database connection failed: {op_err}")
 
+    except Error as db_err:
+        print(f"❌ Error inserting data: {db_err}")
+        conn.rollback()
 
+    finally:
+        # Clean up resources
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
-if __name__ == "__main__":
-    openSky_api_access()

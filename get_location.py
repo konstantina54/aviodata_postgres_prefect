@@ -2,6 +2,7 @@ import requests
 import configparser
 
 
+
 config = configparser.ConfigParser()
 config.read('config.txt')
 
@@ -9,7 +10,7 @@ config.read('config.txt')
 def get_public_ip():
     try:
         response = requests.get('https://api.ipify.org?format=text', timeout=5)
-        get_ip_location(response.text)
+        # get_ip_location(response.text)
         return response.text
     except requests.RequestException as e:
         return f"Error: {e}"
@@ -44,8 +45,8 @@ def get_ip_location(ip_address):
         return f"Unexpected error: {e}"        
 
 # print("Your public IP address is:", get_public_ip())
-def find_local_airports(lon, lat):
-"""Get coordinates of airports based on the ip info""""
+# def find_local_airports(lon, lat):
+# """Get coordinates of airports based on the ip info""""
 
 
 
@@ -62,8 +63,8 @@ def find_local_airports(lon, lat):
 #     return R * c
 
 
-
-get_public_ip()
+if __name__ == "__main__":
+    get_public_ip()
 
 
 

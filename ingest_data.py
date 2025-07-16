@@ -1,7 +1,8 @@
 import pandas as pd
 from opensky_api import OpenSkyApi
 from openSky_api import openSky_api_access 
-from postgres_functions import get_connection, insert_airports
+from postgres_functions import insert_airports, insert_ip_safely, db_config
+from get_location import get_public_ip
 
 
 
@@ -12,19 +13,14 @@ from postgres_functions import get_connection, insert_airports
 # df2 = pd.DataFrame(departures)
 # print(df2) 
 
-# csv_name = 'atfm_slot_adherence_2024.csv'
-'''connect to postgres'''
-conn = get_connection()
-if conn:
-    print("Connection to the PostgreSQL established successfully.")
-    # insert_airports()
-else:
-    print("Connection to the PostgreSQL encountered and error.")
 
+def main():
+    insert_airports()
+    ip_address = get_public_ip()
+    insert_ip_safely(ip_address, db_config)
 
-conn.close()   
 
 
 
 if __name__ == "__main__":
-    get_connection()
+    main()
