@@ -18,9 +18,6 @@ db_config = {
 # table_name = config.get('postgres', 'table_name')
 
 
-
-
-
 def get_engine():
     """Returns a SQLAlchemy engine."""
     conn_str = f"postgresql+psycopg2://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['dbname']}"
@@ -86,3 +83,9 @@ def insert_ip_safely(ip_address, db_config):
         if 'conn' in locals():
             conn.close()
 
+def add_ip_data(df):
+    engine = get_engine()
+    table_name = "location_data"
+    df.to_sql(table_name, engine, if_exists="append", index=False)
+
+    print(f"Data inserted into table '{table_name}'.")

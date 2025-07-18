@@ -1,5 +1,6 @@
 import requests
 import configparser
+import pandas as pd
 
 
 
@@ -20,34 +21,33 @@ def get_public_ip():
 def get_ip_location(ip_address):
     try:
         api = config.get('ipify', 'api')
-        # url = f"https://geo.ipify.org/api/v2/country,city?apiKey={api}&ipAddress={ip_address}"
-        # response = requests.get(url, timeout=5)
-        # data = response.json()
-        data = {'ip': '82.1.26.218', 'location': {'country': 'GB', 'region': 'England', 'city': 'Beckenham', 'lat': 51.40878, 'lng': -0.02526, 'postalCode': 'BR3', 'timezone': '+01:00', 'geonameId': 2656065}, 'as': {'asn': 5089, 'name': 'NTL', 'route': '82.0.0.0/14', 'domain': 'http://www.virginmedia.com', 'type': 'Cable/DSL/ISP'}, 'isp': 'Virgin Media'}
+        url = f"https://geo.ipify.org/api/v2/country,city?apiKey={api}&ipAddress={ip_address}"
+        response = requests.get(url, timeout=5)
+        data = response.json()
+        # data = {'ip': '82.1.26.218', 'location': {'country': 'GB', 'region': 'England', 'city': 'Beckenham', 'lat': 51.40878, 'lng': -0.02526, 'postalCode': 'BR3', 'timezone': '+01:00', 'geonameId': 2656065}, 'as': {'asn': 5089, 'name': 'NTL', 'route': '82.0.0.0/14', 'domain': 'http://www.virginmedia.com', 'type': 'Cable/DSL/ISP'}, 'isp': 'Virgin Media'}
         if 'error' in data:
             return f"Error: {data.get('reason', 'Unknown error')}"
         
-        location_info = {
-            "IP": data.get("ip"),
-            "City": data.get("location", {}).get("city", {}),
-            "Region": data.get("location", {}).get("region", {}),
-            "Country": data.get("location", {}).get("country", {}),
-            "Latitude": data.get("location", {}).get("lat", {}),
-            "Longitude": data.get("location", {}).get("lng", {}),
-            "PostCode": data.get("location", {}).get("postalCode", {})
+        location_data = {
+            "ip": data.get("ip"),
+            "city": data.get("location", {}).get("city", {}),
+            "region": data.get("location", {}).get("region", {}),
+            "country": data.get("location", {}).get("country", {}),
+            "latitude": data.get("location", {}).get("lat", {}),
+            "longitude": data.get("location", {}).get("lng", {}),
+            "postCode": data.get("location", {}).get("postalCode", {}),
+            "geonameId": data.get("location", {}).get("geonameId",{}),
+            "asn": data.get("as", {}).get("asn",{})
         }
-        print(location_info)
-        return location_info
+        # print(location_data)
+        df = pd.DataFrame([location_data])
+        print(df)
+        return df
 
     except requests.RequestException as e:
         return f"Request error: {e}"
     except Exception as e:
         return f"Unexpected error: {e}"        
-
-# print("Your public IP address is:", get_public_ip())
-# def find_local_airports(lon, lat):
-# """Get coordinates of airports based on the ip info""""
-
 
 
 
