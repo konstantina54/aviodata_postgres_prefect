@@ -1,6 +1,7 @@
 import requests
 import configparser
 import pandas as pd
+from math import radians, sin, cos, sqrt, atan2, asin
 
 
 
@@ -41,7 +42,7 @@ def get_ip_location(ip_address):
         }
         # print(location_data)
         df = pd.DataFrame([location_data])
-        print(df)
+        # print(df)
         return df
 
     except requests.RequestException as e:
@@ -51,16 +52,23 @@ def get_ip_location(ip_address):
 
 
 
-
+def haversin_distance_calculator(personal_coord, coordinates):
+    lat1 = personal_coord[0]
+    lon1 = personal_coord[1]
+    print(lat1, lon1)
 # Calculate distance between current location and airport. If raius > than xkm don't bother else identify
 # Haversine formula to calculate distance between two lat/lon points in km
 # def haversine(lat1, lon1, lat2, lon2):
-#     R = 6371  # Earth radius in km
-#     dlat = radians(lat2 - lat1)
-#     dlon = radians(lon2 - lon1)
-#     a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
-#     c = 2 * asin(sqrt(a))
-#     return R * c
+    R = 6371  # Earth radius in km
+    for lat2, lon2 in coordinates:
+        dlat = radians(lat2 - lat1)
+        dlon = radians(lon2 - lon1)
+        a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
+        c = 2 * asin(sqrt(a))
+        distance = R*c
+        if distance < 50:
+            print(distance)
+        # return distance
 
 
 if __name__ == "__main__":

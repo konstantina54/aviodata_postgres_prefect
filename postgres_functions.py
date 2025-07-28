@@ -89,3 +89,29 @@ def add_ip_data(df):
     df.to_sql(table_name, engine, if_exists="append", index=False)
 
     print(f"Data inserted into table '{table_name}'.")
+
+
+def get_airports_by_region(region):
+    """extract posgres data about long and latitude based on users country"""
+    conn = psycopg2.connect(**db_config)
+    cursor = conn.cursor()
+    try:
+        with conn.cursor() as cur:
+            query = """
+                SELECT latitude_deg, longitude_deg
+                FROM airports
+                WHERE iso_country = %s
+            """
+            cur.execute(query, (region,))
+            results = cur.fetchall()
+        return results
+
+    except psycopg2.Error as e:
+        print(f"Database error: {e}")
+        return []
+
+
+    return results
+  
+
+
