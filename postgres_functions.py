@@ -98,7 +98,7 @@ def get_airports_by_region(region):
     try:
         with conn.cursor() as cur:
             query = """
-                SELECT latitude_deg, longitude_deg
+                SELECT latitude_deg, longitude_deg, icao_code, name
                 FROM airports
                 WHERE iso_country = %s
             """

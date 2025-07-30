@@ -2,6 +2,7 @@ import requests
 import configparser
 import pandas as pd
 from math import radians, sin, cos, sqrt, atan2, asin
+from openSky_api import openSky_api_access
 
 
 
@@ -52,27 +53,33 @@ def get_ip_location(ip_address):
 
 
 
-def haversin_distance_calculator(personal_coord, coordinates):
+def haversin_distance_calculator(personal_coord, airport_data):
+    """Haversine formula to calculate distance between two lat/lon points in km"""
+
     lat1 = personal_coord[0]
     lon1 = personal_coord[1]
-    print(lat1, lon1)
-# Calculate distance between current location and airport. If raius > than xkm don't bother else identify
-# Haversine formula to calculate distance between two lat/lon points in km
-# def haversine(lat1, lon1, lat2, lon2):
+    # lat1 = 52.059980
+    # lon1 = 1.274550
+    # print(lat1, lon1)
     R = 6371  # Earth radius in km
-    for lat2, lon2 in coordinates:
+    arrivals_total = 0
+    departure_total = 0
+    for lat2, lon2 , icao_code, z in airport_data:
         dlat = radians(lat2 - lat1)
         dlon = radians(lon2 - lon1)
         a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
         c = 2 * asin(sqrt(a))
         distance = R*c
-        if distance < 50:
-            print(distance)
-        # return distance
+        if distance < 100:
+            if icao_code:
+                # print(distance, icao_code, z)
+                arrivals, departures = openSky_api_access(icao_code)
+                arrivals_total += arrivals
+                departure_total += departures
+                # print(arrivals_total, departure_total)
+    return arrivals_total, departure_total 
 
 
-if __name__ == "__main__":
-    get_public_ip()
 
 
 

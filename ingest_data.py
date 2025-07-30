@@ -24,9 +24,10 @@ def main():
     region = ip_location_df['country'].iloc[0]
     personal_coord = [ip_location_df['latitude'].iloc[0], ip_location_df['longitude'].iloc[0]]
     # need to get just the long and lat for my location and for any airport for my region and pass for radius calculation
-    coordinates = get_airports_by_region(region)
-    haversin_distance_calculator(personal_coord, coordinates)
-
+    airports_data = get_airports_by_region(region)
+    arrivals, departures = haversin_distance_calculator(personal_coord, airports_data)
+    total = arrivals + departures
+    print(f"For yester day there is {arrivals} arrivals and {departures} departures total of {total} for the day in 100km distance")
 
 
 
