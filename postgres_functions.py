@@ -3,6 +3,9 @@ from sqlalchemy import create_engine
 import psycopg2
 from psycopg2 import OperationalError, Error
 import pandas as pd
+from pandas import json_normalize
+from datetime import datetime, UTC
+
 
 config = configparser.ConfigParser()
 config.read('config.txt')
@@ -98,7 +101,7 @@ def get_airports_by_region(region):
     try:
         with conn.cursor() as cur:
             query = """
-                SELECT latitude_deg, longitude_deg, icao_code, name
+                SELECT latitude_deg, longitude_deg, icao_code
                 FROM airports
                 WHERE iso_country = %s
             """
@@ -115,3 +118,29 @@ def get_airports_by_region(region):
   
 
 
+def postgres_arrivals(data):
+    # data = [{'icao24': '404e72', 'firstSeen': 1754406675, 'estDepartureAirport': 'EGBG', 'lastSeen': 1754408592, 'estArrivalAirport': 'EGWN', 'callsign': 'GEDGA   ', 'estDepartureAirportHorizDistance': 1732, 'estDepartureAirportVertDistance': 443, 'estArrivalAirportHorizDistance': 1570, 'estArrivalAirportVertDistance': 9, 'departureAirportCandidatesCount': 0, 'arrivalAirportCandidatesCount': 5}, {'icao24': '40605b', 'firstSeen': 1754405523, 'estDepartureAirport': 'EGHN', 'lastSeen': 1754407967, 'estArrivalAirport': 'EGWN', 'callsign': 'GOLEW   ', 'estDepartureAirportHorizDistance': 1712, 'estDepartureAirportVertDistance': 234, 'estArrivalAirportHorizDistance': 13764, 'estArrivalAirportVertDistance': 59, 'departureAirportCandidatesCount': 1, 'arrivalAirportCandidatesCount': 4}]
+    df = json_normalize(data)
+    df["insertion_time"] = datetime.now(UTC)
+    engine = get_engine()
+    df.to_sql(
+    name="arrivals",
+    con=engine,
+    if_exists="append",   # 'replace' to drop/create, 'append' to add rows
+    index=False
+)
+
+def postgres_departures(data):
+    # data = [{'icao24': '404e72', 'firstSeen': 1754406675, 'estDepartureAirport': 'EGBG', 'lastSeen': 1754408592, 'estArrivalAirport': 'EGWN', 'callsign': 'GEDGA   ', 'estDepartureAirportHorizDistance': 1732, 'estDepartureAirportVertDistance': 443, 'estArrivalAirportHorizDistance': 1570, 'estArrivalAirportVertDistance': 9, 'departureAirportCandidatesCount': 0, 'arrivalAirportCandidatesCount': 5}, {'icao24': '40605b', 'firstSeen': 1754405523, 'estDepartureAirport': 'EGHN', 'lastSeen': 1754407967, 'estArrivalAirport': 'EGWN', 'callsign': 'GOLEW   ', 'estDepartureAirportHorizDistance': 1712, 'estDepartureAirportVertDistance': 234, 'estArrivalAirportHorizDistance': 13764, 'estArrivalAirportVertDistance': 59, 'departureAirportCandidatesCount': 1, 'arrivalAirportCandidatesCount': 4}]
+    df = json_normalize(data)
+    df["insertion_time"] = datetime.now(UTC)
+    engine = get_engine()
+    df.to_sql(
+    name="departures",
+    con=engine,
+    if_exists="append",   # 'replace' to drop/create, 'append' to add rows
+    index=False
+)
+
+if __name__ == "__main__":
+    postgres_arrivals()

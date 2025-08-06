@@ -2,6 +2,7 @@ from opensky_api import OpenSkyApi
 import configparser
 from datetime import datetime, time, timedelta
 import requests, json
+from postgres_functions import postgres_arrivals, postgres_departure
 
 
 config = configparser.ConfigParser()
@@ -39,6 +40,7 @@ def openSky_arrival(headers, airport, begin, end):
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         arrivals = response.json()
+        postgres_arrivals(arrivals)
         number_arrivals = len(arrivals)
         return number_arrivals
     except requests.exceptions.HTTPError as e:
@@ -55,6 +57,7 @@ def openSky_departures(headers, airport, begin, end):
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         departures = response.json()
+        postgres_departure(departures)
         number_departures = len(departures)
         return number_departures
     except requests.exceptions.HTTPError as e:

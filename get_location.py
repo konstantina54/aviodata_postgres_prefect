@@ -64,7 +64,7 @@ def haversin_distance_calculator(personal_coord, airport_data):
     R = 6371  # Earth radius in km
     arrivals_total = 0
     departure_total = 0
-    for lat2, lon2 , icao_code, z in airport_data:
+    for lat2, lon2 , icao_code in airport_data:
         dlat = radians(lat2 - lat1)
         dlon = radians(lon2 - lon1)
         a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
