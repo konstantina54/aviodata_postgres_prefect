@@ -4,7 +4,8 @@ import psycopg2
 from psycopg2 import OperationalError, Error
 import pandas as pd
 from pandas import json_normalize
-from datetime import datetime, UTC
+from datetime import datetime, UTC, timedelta
+from prefect import task
 
 
 config = configparser.ConfigParser()
@@ -20,14 +21,14 @@ db_config = {
 }
 # table_name = config.get('postgres', 'table_name')
 
-
+@task (log_prints = True)
 def get_engine():
     """Returns a SQLAlchemy engine."""
     conn_str = f"postgresql+psycopg2://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['dbname']}"
     return create_engine(conn_str)
 
 
-
+@task (log_prints = True)
 def insert_airports():
     """add airport data in postgres"""
     file_path = 'airports.csv'
@@ -40,9 +41,9 @@ def insert_airports():
     engine = get_engine()
     df.to_sql(table_name, engine, if_exists='replace', index=False)
 
-    print(f"✅ CSV imported successfully into table '{table_name}' in your PostgreSQL database.")
+    # print(f"✅ CSV imported successfully into table '{table_name}' in your PostgreSQL database.")
 
-
+@task (log_prints = True)
 def insert_ip_safely(ip_address, db_config):
     """
     Create `ip_addresses` table if it doesn't exist,
@@ -70,7 +71,7 @@ def insert_ip_safely(ip_address, db_config):
 
         conn.commit()
 
-        print(f"✅ IP '{ip_address}' inserted successfully.")
+        # print(f"✅ IP '{ip_address}' inserted successfully.")
 
     except OperationalError as op_err:
         print(f"❌ Database connection failed: {op_err}")
@@ -86,7 +87,10 @@ def insert_ip_safely(ip_address, db_config):
         if 'conn' in locals():
             conn.close()
 
+
+@task (log_prints = True)
 def add_ip_data(df):
+    print(df)
     engine = get_engine()
     table_name = "location_data"
     df.to_sql(table_name, engine, if_exists="append", index=False)
@@ -94,6 +98,8 @@ def add_ip_data(df):
     print(f"Data inserted into table '{table_name}'.")
 
 
+
+@task (log_prints = True)
 def get_airports_by_region(region):
     """extract posgres data about long and latitude based on users country"""
     conn = psycopg2.connect(**db_config)
@@ -117,30 +123,28 @@ def get_airports_by_region(region):
     return results
   
 
-
-def postgres_arrivals(data):
+@task (log_prints = True)
+def postgres_flights_data(data, flight_type):
     # data = [{'icao24': '404e72', 'firstSeen': 1754406675, 'estDepartureAirport': 'EGBG', 'lastSeen': 1754408592, 'estArrivalAirport': 'EGWN', 'callsign': 'GEDGA   ', 'estDepartureAirportHorizDistance': 1732, 'estDepartureAirportVertDistance': 443, 'estArrivalAirportHorizDistance': 1570, 'estArrivalAirportVertDistance': 9, 'departureAirportCandidatesCount': 0, 'arrivalAirportCandidatesCount': 5}, {'icao24': '40605b', 'firstSeen': 1754405523, 'estDepartureAirport': 'EGHN', 'lastSeen': 1754407967, 'estArrivalAirport': 'EGWN', 'callsign': 'GOLEW   ', 'estDepartureAirportHorizDistance': 1712, 'estDepartureAirportVertDistance': 234, 'estArrivalAirportHorizDistance': 13764, 'estArrivalAirportVertDistance': 59, 'departureAirportCandidatesCount': 1, 'arrivalAirportCandidatesCount': 4}]
-    df = json_normalize(data)
-    df["insertion_time"] = datetime.now(UTC)
+    df = pd.DataFrame(data)
+    yesterday_utc = datetime.now(UTC) - timedelta(days=1)
+    df["flight_date"] = yesterday_utc
     engine = get_engine()
-    df.to_sql(
-    name="arrivals",
-    con=engine,
-    if_exists="append",   # 'replace' to drop/create, 'append' to add rows
-    index=False
-)
+    if flight_type == 'a':
+        df.to_sql(
+        name="arrivals",
+        con=engine,
+        if_exists="append",   # 'replace' to drop/create, 'append' to add rows
+        index=False
+    )
+    elif flight_type == 'd':
+                    df.to_sql(
+        name="departures",
+        con=engine,
+        if_exists="append",   # 'replace' to drop/create, 'append' to add rows
+        index=False
+    )
 
-def postgres_departures(data):
-    # data = [{'icao24': '404e72', 'firstSeen': 1754406675, 'estDepartureAirport': 'EGBG', 'lastSeen': 1754408592, 'estArrivalAirport': 'EGWN', 'callsign': 'GEDGA   ', 'estDepartureAirportHorizDistance': 1732, 'estDepartureAirportVertDistance': 443, 'estArrivalAirportHorizDistance': 1570, 'estArrivalAirportVertDistance': 9, 'departureAirportCandidatesCount': 0, 'arrivalAirportCandidatesCount': 5}, {'icao24': '40605b', 'firstSeen': 1754405523, 'estDepartureAirport': 'EGHN', 'lastSeen': 1754407967, 'estArrivalAirport': 'EGWN', 'callsign': 'GOLEW   ', 'estDepartureAirportHorizDistance': 1712, 'estDepartureAirportVertDistance': 234, 'estArrivalAirportHorizDistance': 13764, 'estArrivalAirportVertDistance': 59, 'departureAirportCandidatesCount': 1, 'arrivalAirportCandidatesCount': 4}]
-    df = json_normalize(data)
-    df["insertion_time"] = datetime.now(UTC)
-    engine = get_engine()
-    df.to_sql(
-    name="departures",
-    con=engine,
-    if_exists="append",   # 'replace' to drop/create, 'append' to add rows
-    index=False
-)
 
 if __name__ == "__main__":
     postgres_arrivals()

@@ -2,13 +2,14 @@ from opensky_api import OpenSkyApi
 import configparser
 from datetime import datetime, time, timedelta
 import requests, json
-from postgres_functions import postgres_arrivals, postgres_departure
+from postgres_functions import postgres_flights_data
+from prefect import task
 
 
 config = configparser.ConfigParser()
 config.read('config.txt')
 
-
+@task (log_prints = True)
 def openSky_api_access(airport):
     # print(airport)
     client_id = config.get('openSky', 'client_id')
@@ -33,14 +34,14 @@ def openSky_api_access(airport):
     return arrivals, departures
 
   
-
+@task (log_prints = True)
 def openSky_arrival(headers, airport, begin, end):
     url = f'https://opensky-network.org/api/flights/arrival?airport={airport}&begin={begin}&end={end}'
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         arrivals = response.json()
-        postgres_arrivals(arrivals)
+        postgres_flights_data(arrivals, "a")
         number_arrivals = len(arrivals)
         return number_arrivals
     except requests.exceptions.HTTPError as e:
@@ -50,14 +51,14 @@ def openSky_arrival(headers, airport, begin, end):
             print(f"HTTP error: {e}, response: {response.text}")
             raise  # Re-raise unexpected errors
 
-
+@task (log_prints = True)
 def openSky_departures(headers, airport, begin, end):
     url = f'https://opensky-network.org/api/flights/departure?airport={airport}&begin={begin}&end={end}'
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         departures = response.json()
-        postgres_departure(departures)
+        postgres_flights_data(departures, "d")
         number_departures = len(departures)
         return number_departures
     except requests.exceptions.HTTPError as e:

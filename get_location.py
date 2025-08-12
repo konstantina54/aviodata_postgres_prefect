@@ -1,15 +1,16 @@
 import requests
 import configparser
 import pandas as pd
-from math import radians, sin, cos, sqrt, atan2, asin
+from math import radians, sin, cos, sqrt, asin
 from openSky_api import openSky_api_access
+from prefect import task
 
 
 
 config = configparser.ConfigParser()
 config.read('config.txt')
 
-
+@task (log_prints = True)
 def get_public_ip():
     try:
         response = requests.get('https://api.ipify.org?format=text', timeout=5)
@@ -19,7 +20,7 @@ def get_public_ip():
         return f"Error: {e}"
 
 
-
+@task (log_prints = True)
 def get_ip_location(ip_address):
     try:
         api = config.get('ipify', 'api')
@@ -43,7 +44,6 @@ def get_ip_location(ip_address):
         }
         # print(location_data)
         df = pd.DataFrame([location_data])
-        # print(df)
         return df
 
     except requests.RequestException as e:
@@ -52,7 +52,7 @@ def get_ip_location(ip_address):
         return f"Unexpected error: {e}"        
 
 
-
+@task (log_prints = True)
 def haversin_distance_calculator(personal_coord, airport_data):
     """Haversine formula to calculate distance between two lat/lon points in km"""
 
@@ -70,7 +70,7 @@ def haversin_distance_calculator(personal_coord, airport_data):
         a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
         c = 2 * asin(sqrt(a))
         distance = R*c
-        if distance < 100:
+        if distance < 70:
             if icao_code:
                 # print(distance, icao_code, z)
                 arrivals, departures = openSky_api_access(icao_code)
