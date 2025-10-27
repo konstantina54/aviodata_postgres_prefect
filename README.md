@@ -1,108 +1,88 @@
-README.md
-✈️ Flight Activity Tracker
+# aviodata_postgres_prefect
 
-Analyze peak flight activity by location using real-world aviation data
-📌 Overview
+**Aviation Data Pipeline with Prefect, PostgreSQL, and OpenSky API**
 
-Flight Activity Tracker is a data engineering project that ingests, processes, and analyzes flight data to identify peak traffic times at various airports. The project demonstrates a real-world data pipeline using Python, PostgreSQL, and SQL, with interactive visualizations for time-based and location-based traffic patterns.
-🚀 Features
+This repository implements a robust data ingestion and processing pipeline to fetch aviation data via the OpenSky API, store it in PostgreSQL, and orchestrate workflows using Prefect.
 
-    Collects real or historical flight data (e.g. via OpenSky API)
+---
 
-    Stores data in a relational database (PostgreSQL)
+##  Overview
 
-    Aggregates and analyzes traffic per airport and time window
+- **Fetch real-time or historical flight data** using the OpenSky API.
+- **Store and manage data** in PostgreSQL using `psycopg2` or `SQLAlchemy`.
+- **Pipeline orchestration** through Prefect for scheduling, monitoring, and retries.
+- **Core modules** for data ingestion, geolocation, database operations, and main workflow orchestration.
 
-    Interactive dashboard (Streamlit or Jupyter) for exploring peak activity
+---
 
-    Optional geospatial visualization using Plotly or Folium
+##  File Structure
 
-🧰 Tech Stack
+.
+├── get_location.py # Utilities for determining location data
+├── ingest_data.py # Functions to fetch and prepare flight data
+├── openSky_api.py # Handles communication with the OpenSky API
+├── postgres_functions.py # Database connection, schema creation, and data insertion
+├── main.py # Orchestrates the Prefect workflow
+├── requirements.txt # Python dependencies
+└── README.md # Project overview and instructions
 
-    Python – data ingestion, ETL, analysis
 
-    PostgreSQL – data storage and querying
+---
 
-    Pandas / SQLAlchemy – data manipulation
+##  Technical Stack
 
-    OpenSky API – real-time flight data source
+- **Python** – Core scripting and orchestration
+- **Prefect** – Workflow management and scheduling
+- **PostgreSQL** – Relational database for storing and querying flight data
+- **OpenSky API** – Source of aviation data
+- **psycopg2** / **SQLAlchemy** – Database interaction and ORM support
+- **(Optional)** Geospatial libraries for enrichments (e.g., Shapely, GeoPandas)
 
-    Streamlit / Matplotlib – data visualization
+---
 
-    Docker (optional) – containerized environment
+### Prerequisites
 
-🗃️ Database Schema
+- Python 3.8+
+- PostgreSQL server accessible and configured
+- API credentials (if required by OpenSky or proxy setup)
 
-airports (
-    id SERIAL PRIMARY KEY,
-    iata_code VARCHAR,
-    name TEXT,
-    lat FLOAT,
-    lon FLOAT
-)
+**Clone the repository**
 
-flights (
-    id SERIAL PRIMARY KEY,
-    flight_number VARCHAR,
-    origin_airport VARCHAR,
-    destination_airport VARCHAR,
-    timestamp TIMESTAMP,
-    altitude INTEGER,
-    status VARCHAR
-)
+   ```bash
+   git clone https://github.com/konstantina54/aviodata_postgres_prefect.git
+   cd aviodata_postgres_prefect
 
-📈 Sample Analysis
-
-    Peak hourly traffic for JFK Airport (Past 24 hours)
-
-SELECT DATE_TRUNC('hour', timestamp) AS hour, COUNT(*) AS flights
-FROM flights
-WHERE origin_airport = 'JFK'
-GROUP BY hour
-ORDER BY hour DESC;
-
-🛠️ Setup Instructions
-
-    Clone the repo
-
-git clone https://github.com/your-username/flight-activity-tracker.git
-cd flight-activity-tracker
-
-Install requirements
+    Install dependencies
 
 pip install -r requirements.txt
 
-Set up PostgreSQL database
+Prepare the PostgreSQL database
 
-createdb flight_tracker
-psql flight_tracker < schema.sql
+CREATE DATABASE aviodata;
+-- Then in your terminal:
+psql -d aviodata -f path/to/schema.sql  # If a schema file exists
 
-Run ETL pipeline
+Configure environment variables (if used)
 
-python etl/fetch_flight_data.py
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_NAME=aviodata
+export DB_USER=your_username
+export DB_PASSWORD=your_password
 
+Test API connectivity
 
+python openSky_api.py
 
-🧠 Lessons Learned
+Run data ingestion
 
-    Built end-to-end data ingestion and storage pipeline
+python ingest_data.py
 
-    Worked with time-series and geospatial data
+Initialize the Prefect workflow
 
-    Applied SQL for real-time analytics
+Visualize and run via Prefect:
 
-    Integrated API data with custom dashboards
-
-📂 Project Structure
-
-.
-├── etl/
-│   └── fetch_flight_data.py
-├── dashboard/
-│   └── app.py
-├── data/
-│   └── sample_data.csv
-├── schema.sql
-├── requirements.txt
-└── README.md
-# aviodata_postgres_prefect
+prefect orion start
+prefect deployments build main.py:flow --name="flight-data-pipeline"
+prefect deployment apply flight-data-pipeline-deployment.yaml
+prefect deployment run flight-data-pipeline
